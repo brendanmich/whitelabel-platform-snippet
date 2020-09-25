@@ -1,0 +1,14 @@
+<script type="application/ld+json">
+	{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "<%= state.entity.name %>",
+		"url": "<%- state.entity.website %>",
+		"address": "",
+		"sameAs": [
+		<% for (let i = 0; i < state.entity.entities.length; i += 1) { -%>
+		"<%- state.entity.entities[i] -%>"<%= (i !== state.entity.entities.length - 1) ? ',' : '' %>
+		<% } -%>
+		]
+	}
+</script>

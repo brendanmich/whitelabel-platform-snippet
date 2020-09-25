@@ -1,0 +1,82 @@
+<!-- MIT LICENSE -->
+
+<!doctype HTML>
+
+<html lang="en">
+	<head>
+
+		<!-- Google Tag Manager -->
+		<% if (process.env.ENV === "production") { %>
+			<%- include('../components/google_tag_head')  %>
+		<% } %>
+
+		<!-- Site Meta -->
+		<title>Page Not Found - <%= state.entity.name %></title>
+		<meta name="description" content="Uh oh, we can’t seem to find the page you’re looking for.">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width" />
+		<meta name="robots" content="noindex" />
+
+		<!-- Mobile Meta -->
+		<meta name="apple-mobile-web-app-title" content="<%= state.entity.name %>">
+		<meta name="application-name" content="<%= state.entity.name %>">
+
+		<!-- Schema -->
+		<%- include('../components/schema_org_head') %>
+
+		<!-- External Fonts -->
+		<%- include('../components/fonts') %>
+
+		<!-- Styles -->
+		<link rel="stylesheet" type="text/css" href="<%= process.env.CDN_URL %>/public/<%= webpack_asset('error_404','css') %>">
+
+		<!-- Theme Override -->
+		<% if (!state.isCore) { %> <%- include('../components/theme_override')  %> <% } %>
+
+		<!-- Manifest -->
+		<link rel="manifest" href="/manifest.json" />
+
+		<!-- Mobile Assets -->
+		<% if (state.isCore) { %>
+			<link rel="apple-touch-icon" href="<%= process.env.CDN_URL %>/public/external/mobile/mobile-icon-192.png">
+		<% } else { %>
+			<link rel="apple-touch-icon" href="<%- state.entity.mobile_icon %>">
+		<% } %>
+
+		<!-- Favicon -->
+		<% if (state.isCore) { %>
+			<link rel="shortcut icon" href="<%= process.env.CDN_URL %>/public/img/favicon.ico" type="image/x-icon">
+			<link rel="icon" href="<%= process.env.CDN_URL %>/public/img/favicon.ico" type="image/x-icon">
+		<% } else { %>
+			<link rel="shortcut icon" href="<%- state.entity.favicon %>" type="image/x-icon">
+			<link rel="icon" href="<%- state.entity.favicon %>" type="image/x-icon">
+		<% } %>
+	</head>
+
+	<body class="preload">
+
+		<!-- Google Tag Manager -->
+		<% if (process.env.ENV === "production") { %>
+			<%- include('../components/google_tag_body') %>
+		<% } %>
+
+		<!-- Top Tag -->
+        <div id="top"></div>
+
+		<!-- Header -->
+		<%- include('../navigation/header.ejs') %>
+
+		<!-- Content -->
+		<div class="error-page"></div>
+
+		<!-- Footer -->
+		<% if (state.isCore) { %>
+			<%- include('../navigation/footer') %>
+		<% } else { %>
+			<%- include('../navigation/partner_footer') %>
+		<% } %>
+
+		<!-- Scripts -->
+		<script src="<%= process.env.CDN_URL %>/public/<%= webpack_asset('error_404','js') %>"></script>
+	</body>
+</html>

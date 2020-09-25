@@ -1,0 +1,13 @@
+/* MIT LICENSE */
+
+:root {
+	--app-background: white;
+	--app-primary: #4d708c;
+	--app-grey-text: #717274;
+	--app-medium-light-gray: #c3c3c3;
+	--app-darker-blue: #44566c;
+	--app-dark-blue: #4d708c;
+	--app-light-blue: #c6d8e5;
+	--app-lighter-blue: #f0f5f7;
+	--app-table-border: #dbd9d2;
+}

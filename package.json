@@ -1,0 +1,100 @@
+{
+	"name": "whitelabel-platform-snippet",
+	"version": "1.0.0",
+	"main": "server/index.js",
+	"scripts": {
+		"clean": "rimraf build/*",
+		"build": "webpack -p",
+		"start": "node server/index.js",
+		"watch": "ENV=development webpack --watch",
+		"development": "concurrently --kill-others \"ENV=development webpack-dev-server\" \"ENV=development nodemon server/index.js\"",
+		"qa": "ENV=qa webpack -p && ENV=qa node server/index.js",
+		"staging": "ENV=staging webpack -p && ENV=staging node server/index.js",
+		"production": "ENV=production webpack -p && ENV=production node server/index.js",
+		"lint": "npm-run-all -p lint:code lint:css lint:ejs",
+		"lint:code": "eslint .",
+		"lint:css": "stylelint 'src/**/*.css'",
+		"lint:ejs": "find views -type f -iname '*.ejs' -exec bash -c \"./node_modules/.bin/ejslint '{}'\" \\;",
+		"lint:fix": "eslint --fix .",
+		"format": "npm run prettier -- --write",
+		"prettier": "prettier \"**/*.{html,md,css,scss,yaml,yml}\""
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/brendanmich/whitelabel-platform-snippet"
+	},
+	"nodemonConfig": {
+		"ignore": [
+			".git",
+			"config/*",
+			"db/*",
+			"logs/*",
+			"models/*",
+			"src/*",
+			"build/*",
+			"views/*"
+		],
+		"ext": "js,mjs,json,ejs,html,txt"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"concurrently": "^5.2.0",
+		"cookie-parser": "^1.4.4",
+		"dotenv": "~7.0.0",
+		"ejs": "^2.6.1",
+		"express": "^4.17.1",
+		"express-async-errors": "^3.1.1",
+		"express-basic-auth": "^1.2.0",
+		"express-webpack-assets": "^0.1.0",
+		"foundation-sites": "^6.5.3",
+		"helmet": "^3.16.0",
+		"jquery": "^3.3.1",
+		"regenerator-runtime": "^0.13.3",
+		"serve-favicon": "^2.5.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.4.0",
+		"@babel/preset-env": "^7.9.0",
+		"assets-webpack-plugin": "^3.9.10",
+		"babel-loader": "^8.0.5",
+		"copy-webpack-plugin": "^6.0.1",
+		"css-loader": "^3.5.3",
+		"ejs-compiled-loader": "^3.0.0",
+		"ejs-lint": "^1.1.0",
+		"eslint": "^6.8.0",
+		"eslint-config-airbnb-base": "^14.1.0",
+		"eslint-plugin-import": "^2.20.2",
+		"eslint-plugin-node": "^11.1.0",
+		"file-loader": "^6.0.0",
+		"glob": "^7.1.6",
+		"html-minifier": "^4.0.0",
+		"husky": "^4.2.5",
+		"lint-staged": "^10.2.2",
+		"mini-css-extract-plugin": "^0.5.0",
+		"nodemon": "^2.0.2",
+		"npm-run-all": "^4.1.5",
+		"prettier": "2.0.5",
+		"rimraf": "^3.0.2",
+		"stylelint": "^13.3.3",
+		"stylelint-config-recommended": "^3.0.0",
+		"url-loader": "^4.1.0",
+		"webpack": "^4.29.6",
+		"webpack-cli": "^3.3.0",
+		"webpack-dev-server": "^3.11.0"
+	},
+	"engines": {
+		"node": ">=12.10.0 <14.0.0"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"lint-staged": {
+		"*.{html,md,css,scss,yaml,yml}": "prettier --write",
+		"*.js": "eslint --fix",
+		"*.ejs": "ejslint",
+		"*.css": "stylelint"
+	}
+}
